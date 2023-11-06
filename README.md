@@ -54,6 +54,8 @@ cli_commands/create_cluster.sh
 ```
 cli_commands/submit_job.sh <filename> <partitions> <eps> <min_points>
 ```
+Where `<filename>` is the name of the dataset saved in the bucket, the `<partitions>` are the number of partitions through which the job
+will be distributed (suggested: #WORKERS * #CPU_PER_WORKER). Finally, `<eps>` and `<min_points>` are the algorithm arguments (notice that this version utilizes Haversine formula, therefore `<eps>` is intended in meters).
 
 ### Save results
 ```
