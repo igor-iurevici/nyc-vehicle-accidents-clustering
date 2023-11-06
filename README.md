@@ -10,7 +10,7 @@ Implementation of a distributed version of the DBSCAN clustering algorithm for t
 The algorithm is applied and tested on the New York City vehicle accidents [dataset](https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95) provided by [NYC OpenData](https://data.cityofnewyork.us).
 
 ## Implementation
-The DBSCAN algorithm takes two input parameters: radius around each point (`epsilon`) and the minimum number of data points that should be around that point within that radius (`minPoints`) and consists in the following phases:
+The DBSCAN algorithm is sensible to two input parameters: radius around each point (`epsilon`) and the minimum number of data points that should be around that point within that radius (`minPoints`). The clustering consists in the following phases:
 - The algorithm proceeds by arbitrarily picking up a point in the dataset (until all points have been visited).
 - If there are at least `minPoints` points within a radius of `epsilon` to the point then we consider all these points to be part of the same cluster.
 - The clusters are then expanded by recursively repeating the neighborhood calculation for each neighboring point.
