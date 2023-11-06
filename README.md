@@ -18,7 +18,7 @@ The DBSCAN algorithm takes two input parameters: radius around each point (`epsi
 
 ### Distributed version
 In the traditional DBSCAN algorithm, one of the most computationally expensive operations is finding the neighbors of each data point.
-The distributed version of this project aims to parallelize this computation over multiple workers.
+The distributed version of this project aims to parallelize this computation over multiple workers and gain scalability through Scala and Spark.
 Details of the implementation are explained in the [presentation](...).
 
 ## Google Cloud Platform (GCP) Deployment
