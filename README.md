@@ -58,7 +58,7 @@ cli_commands/submit_job.sh <filename> <partitions> <eps> <min_points>
 ```
 cli_commands/save_data.sh <source_file>
 ```
-The results are downloaded in a directory named as the `<soruce_file`
+The results are downloaded in a directory named as the `<soruce_file>`
 
 ## Visualization
 A Python script provides results visualization on a map. (assuming Python 3.* and dependencies are installed)
