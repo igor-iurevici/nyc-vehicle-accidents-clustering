@@ -24,7 +24,7 @@ The distributed version of this project aims to parallelize this computation ove
 The distributed algorithm exploits the Google Cloud Platform (GCP) Dataproc (for processing) and Buckets (for storage) services.
 A verified GCP account must be created and a payment method added in order to utilize its services.
 
-To build and deploy the current project the following GCP CLI commands (installable [here](https://cloud.google.com/sdk/docs/install)) must be executed.
+To build and deploy the current project the following GCP CLI commands (check the installation guide [here](https://cloud.google.com/sdk/docs/install)) must be executed.
 Some commands have been included in different bash scripts in the `cli_commands/` folder.
 
 ### Bucket creation
