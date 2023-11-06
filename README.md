@@ -14,7 +14,7 @@ The DBSCAN algorithm takes two input parameters: radius around each point (`epsi
 - The algorithm proceeds by arbitrarily picking up a point in the dataset (until all points have been visited).
 - If there are at least `minPoints` points within a radius of `epsilon` to the point then we consider all these points to be part of the same cluster.
 - The clusters are then expanded by recursively repeating the neighborhood calculation for each neighboring point.
-- The complexity of this algorithm is O(N^2), where n is the number of points.
+- The complexity of this algorithm is O(N<sup>2</sup>), where n is the number of points.
 
 ### Distributed version
 In the traditional DBSCAN algorithm, one of the most computationally expensive operations is finding the neighbors of each data point.
