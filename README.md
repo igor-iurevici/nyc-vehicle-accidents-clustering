@@ -25,7 +25,7 @@ The distributed algorithm exploits the Google Cloud Platform (GCP) Dataproc (for
 A verified GCP account must be created and a payment method added in order to utilize its services.
 
 To build and deploy the current project the following GCP CLI commands (check the installation guide [here](https://cloud.google.com/sdk/docs/install)) must be executed.
-Some commands have been included in different bash scripts in the `cli_commands/` folder.
+Most commands have been included in different bash scripts in the `cli_commands/` folder. It is advisable to check them before usage.
 
 ### Bucket creation
 ```bash
