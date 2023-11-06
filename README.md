@@ -7,7 +7,7 @@
 </p>
 
 Implementation of a distributed version of the DBSCAN clustering algorithm for the University of Bologna course of "Scalable and Cloud Programming".
-The algorithm is applied and tested on the New York City vehicle accidents [dataset](https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95) provided by [NYCOpenData](https://data.cityofnewyork.us).
+The algorithm is applied and tested on the New York City vehicle accidents [dataset](https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95) provided by [NYC OpenData](https://data.cityofnewyork.us).
 
 ## Implementation
 The DBSCAN algorithm takes two input parameters: radius around each point (`epsilon`) and the minimum number of data points that should be around that point within that radius (`minPoints`) and consists in the following phases:
@@ -40,23 +40,25 @@ sbt package clean
 ```
 To load the JAR executable and the dataset to the bucket:
 ```bash
-cli_commands/load_jar.sh
-cli_commands/load_data.sh <source_file>
+./cli_commands/load_jar.sh
+```
+```bash
+./cli_commands/load_data.sh <source_file>
 ```
 
 ### Dataproc cluster creation
 ```bash
-cli_commands/create_cluster.sh
+./cli_commands/create_cluster.sh
 ```
 
 ### Job submit to the cluster
 ```
-cli_commands/submit_job.sh <filename> <partitions> <eps> <min_points>
+./cli_commands/submit_job.sh <filename> <partitions> <eps> <min_points>
 ```
 
 ### Save results
 ```
-cli_commands/save_data.sh <source_file>
+./cli_commands/save_data.sh <source_file>
 ```
 The results are downloaded in a directory named as the `<soruce_file>`
 
