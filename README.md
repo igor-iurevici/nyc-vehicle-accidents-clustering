@@ -3,6 +3,7 @@
 <p>
   <img src="https://img.shields.io/badge/Scala-%202.12.18-green" alt="alternatetext">
   <img src="https://img.shields.io/badge/Spark-3.3.0-red" alt="alternatetext">
+  <img src="https://img.shields.io/badge/Python-3.11.5-blue" alt="alternatetext">
 </p>
 
 Implementation of a distributed version of the DBSCAN clustering algorithm for the University of Bologna course of "Scalable and Cloud Programming".
@@ -13,7 +14,7 @@ The DBSCAN algorithm takes two input parameters: radius around each point (`epsi
 - The algorithm proceeds by arbitrarily picking up a point in the dataset (until all points have been visited).
 - If there are at least `minPoints` points within a radius of `epsilon` to the point then we consider all these points to be part of the same cluster.
 - The clusters are then expanded by recursively repeating the neighborhood calculation for each neighboring point.
-- The complexity of this algorithm is O(n2), where n is the number of points.
+- The complexity of this algorithm is O(N^2), where n is the number of points.
 
 ### Distributed version
 In the traditional DBSCAN algorithm, one of the most computationally expensive operations is finding the neighbors of each data point.
