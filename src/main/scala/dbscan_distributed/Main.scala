@@ -17,6 +17,7 @@ object Main {
     val toFile = args(5)            // Path / Filename for output file
 
     println("*****************************************************")
+    println("I AM UPDATED")
     println("Running DBSCAN with the following configuration:")
     println(s"* Master: $master")
     println(s"* Number of partitions: $partitions")
@@ -37,8 +38,12 @@ object Main {
     val t0 = System.nanoTime
     val model = DBSCAN.fit(spark, fromFile, eps, minPoints)
     val t1 = System.nanoTime
-    println("Elapsed time : " + (t1 - t0) / math.pow(10, 9) + " seconds")
-    println("Found " + model.getClustersNum() + " clusters")
+    println("*****************************************************")
+    println("* Elapsed time : " + (t1 - t0) / math.pow(10, 9) + " seconds")
+    println("* Found " + model.getClustersNum() + " clusters")
+    println("* Used partitions: " + partitions)
+    println("* Used parameters: eps=" + eps + " min points=" + minPoints)
+    println("*****************************************************")
     saveClusters(spark, model.getClusters(), toFile)
     //saveLargestCluster(spark, model.getLargestCluster(), toFile)
     spark.stop()

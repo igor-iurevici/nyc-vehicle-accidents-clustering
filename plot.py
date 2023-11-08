@@ -64,6 +64,7 @@ def main():
     clusters = [f for f in files if f.endswith('.csv')]
 
     clusters_df = pd.read_csv(path + "/" + clusters[0])
+    print(len(clusters_df))
 
     display_clusters_on_map(clusters_df)
 

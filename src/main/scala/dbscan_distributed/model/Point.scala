@@ -29,10 +29,10 @@ case class Point(latitude: Double, longitude: Double) extends Serializable {
   }
 
   // point's neighbors
-  def findNeighbors(data: Seq[Point], eps: Double, metric: Metric = EUCLIDEAN): Seq[Point] = {
+  def findNeighbors(data: Seq[(Point, Long)], eps: Double, metric: Metric = HAVERSINE): Seq[(Point, Long)] = {
     metric match {
-      case EUCLIDEAN => data.filter(distanceTo(_) <= eps)
-      case HAVERSINE => data.filter(haversineDistanceTo(_) <= eps)
+      case EUCLIDEAN => data.filter { case (point, _) => distanceTo(point) <= eps }
+      case HAVERSINE => data.filter { case (point, _) => haversineDistanceTo(point) <= eps }
       case _ => throw new IllegalArgumentException("[ERROR] Metric not valid")
     }
   }

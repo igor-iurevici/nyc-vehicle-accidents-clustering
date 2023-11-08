@@ -8,27 +8,47 @@ import dbscan_distributed.config.SparkConfig._
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SparkSession
 import scala.collection.mutable
-import scala.language.postfixOps
 
 object DBSCAN extends Serializable {
+  /**
+   * Fits a DBSCAN clustering model to the data using Spark.
+   *
+   * DBSCAN (Density-Based Spatial Clustering of Applications with Noise) is a density-based
+   * clustering algorithm that identifies clusters in a dataset based on the density of data points.
+   *
+   * @param spark       The SparkSession to use for distributed computing.
+   * @param filename    The name of the input file or dataset containing the data to be clustered.
+   * @param eps         The maximum radius of the neighborhood around a data point for it to be
+   *                    considered as a core point.
+   * @param minPoints   The minimum number of data points within the neighborhood of a core point
+   *                    for it to be considered a part of a cluster.
+   *
+   * @return A DBSCAN clustering model representing the identified clusters in the data.
+   */
   def fit(spark: SparkSession, filename: String, eps: Double, minPoints: Int): Model = {
     val sc = spark.sparkContext
-    var points: RDD[Point] = loadData(spark, filename)
-    val pointsDriver: Array[Point] = points.collect()
-    val clusters = mutable.Map(points.collect().map((_, UNKNOWN)) toSeq: _*)
+    //var points: RDD[Point] = loadData(spark, filename)
+    //val pointsDriver: Array[Point] = points.collect()
+    var points: RDD[(Point, Long)] = loadData(spark, filename).zipWithIndex()
+    val pointsDriver: Array[(Point, Long)] = points.collect()
+    //val clusters = mutable.Map(points.collect().map((_, UNKNOWN)) toSeq: _*)
+    val clusters = mutable.Map(pointsDriver.map { case (_, index) => (index, UNKNOWN) } toSeq: _*)
+    println(s"Size of clusters map: ${clusters.size}")
     var clusterId = 0
 
     for (p <- pointsDriver) {
-      if (clusters(p) != UNKNOWN) {}
+      if (clusters(p._2) != UNKNOWN) {}
       else {
-        var queue = p.findNeighbors(pointsDriver, eps).toSet
+        var queue = p._1.findNeighbors(pointsDriver, eps).toSet
 
-        if (queue.size < minPoints) clusters(p) = NOISE
+        if (queue.size < minPoints) clusters(p._2) = NOISE
         else {
           clusterId += 1
-          clusters(p) = clusterId
-          queue = queue.filter(p1 => clusters(p1) <= NOISE)
-          queue.foreach(clusters(_) = clusterId)
+          clusters(p._2) = clusterId
+          queue = queue.filter(p1 => clusters(p1._2) <= NOISE)
+
+          queue.foreach { case (_, index) => clusters(index) = clusterId }
+          //queue.foreach(clusters(_._2) = clusterId)
 
           // to EXECUTOR
           while (!queue.isEmpty) {
@@ -36,48 +56,46 @@ object DBSCAN extends Serializable {
             val clustersBC = sc.broadcast(clusters)
 
             // init aggregator
-            def expand(current: Set[Point], p1: Point): Set[Point] = {
-              var neighbors = p1.findNeighbors(pointsDriver, eps)
+            def expand(current: Set[(Point, Long)], p1: (Point, Long)): Set[(Point, Long)] = {
+              var neighbors = p1._1.findNeighbors(pointsDriver, eps)
               if (neighbors.size < minPoints) current
               else {
-                neighbors = neighbors.filter(p2 => clustersBC.value(p2) <= NOISE)
+                neighbors = neighbors.filter(p => clustersBC.value(p._2) <= NOISE)
                 current ++ neighbors.toSet
               }
             }
 
             // back to DRIVER
-            queue = points.aggregate(Set(): Set[Point])(expand, _ ++ _)
+            queue = points.aggregate(Set.empty[(Point, Long)])(expand, (set1, set2) => set1 ++ set2)
             clustersBC.destroy()
-            queue.foreach(clusters(_) = clusterId)
+            //queue.foreach(clusters(_) = clusterId)
+            queue.foreach { case (_, index) => clusters(index) = clusterId}
           }
         }
       }
     }
 
-    /*
-    val clustersRDD: RDD[(Point, Int)] = sc.parallelize(clusters.toSeq)
-    val largestClusterId = clustersRDD
-      .map { case (_, clusterId) => (clusterId, 1) }
-      .reduceByKey(_ + _)
-      .max()(Ordering.by[(Int, Int), Int](_._2))
-      ._1
-     */
+    val result: Seq[(Point, Int)] = pointsDriver.map {
+      case (point, index) => (point, clusters(index))
+    }
 
-    new Model(clusterId, clusters)
+    println("Result size: " + result.size)
+
+    new Model(clusterId, result)
   }
 }
 
 
-class Model(val clustersNum: Int, val clusters: mutable.Map[Point, Int]) {
+class Model(val clustersNum: Int, val clusters: Seq[(Point, Int)]) {
 
   // Total number of clusters
   def getClustersNum(): Int = clustersNum
 
   // Cluster by Id
-  def getClusterById(id: Int): Seq[Point] = clusters.filter( _._2 == id).keys.toSeq
+  def getClusterById(id: Int): Seq[(Point, Int)] = clusters.filter(_._2 == id)
 
   // Noise points
-  def getNoisePoints(): Seq[Point] = clusters.filter(_._2 == NOISE).keys.toSeq
+  def getNoisePoints(): Seq[(Point, Int)] = clusters.filter(_._2 == NOISE)
 
   // Largest cluster id
   def getLargestClusterId(): Int = clusters.groupBy(_._2).maxBy(_._2.size)._1
@@ -86,11 +104,11 @@ class Model(val clustersNum: Int, val clusters: mutable.Map[Point, Int]) {
   def getClusters(): Seq[(Double, Double, Int)] = {
     val data = clusters.map {
       case (point, clusterId) => (point.latitude, point.longitude, clusterId)
-    }.toSeq
+    }
 
     data
   }
 
   // Largest cluster
-  def getLargestCluster(): Seq[Point] = getClusterById(getLargestClusterId())
+  def getLargestCluster(): Seq[(Point, Int)] = getClusterById(getLargestClusterId())
 }

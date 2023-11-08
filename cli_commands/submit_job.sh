@@ -11,7 +11,7 @@ CLUSTER_NAME="nyc-accidents-cluster"
 REGION="us-west1"
 JAR="gs://nyc-accidents-bucket/main.jar"
 MASTER="yarn"
-FROM_FILE="gs://nyc-accidents-bucket/"
+BUCKET="gs://nyc-accidents-bucket/"
 TO_FILE="gs://nyc-accidents-bucket/clustered"
 
 FILENAME="$1"
@@ -24,6 +24,6 @@ submit_job="gcloud dataproc jobs submit spark \
 	--cluster=$CLUSTER_NAME \
 	--region=$REGION \
 	--jar=$JAR \
-	-- $MASTER $PARTITIONS ${FROM_FILE}${FILENAME} $EPS $MIN_POINTS $TO_FILE"
+	-- $MASTER $PARTITIONS ${BUCKET}${FILENAME} $EPS $MIN_POINTS $TO_FILE"
 
 eval $submit_job

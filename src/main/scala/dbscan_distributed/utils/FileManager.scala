@@ -10,7 +10,7 @@ object FileManager {
   def loadData(spark: SparkSession, filename: String): RDD[Point] = {
     val data = spark.read.option("header", "true")
       .csv(filename).rdd.map(row => Point(row.getString(0).toDouble, row.getString(1).toDouble))
-      //.map((_, 1)).reduceByKey((v1, v2) => v1 + v2).keys
+      .map((_, 1)).reduceByKey((v1, v2) => v1 + v2).keys
 
     data
   }
