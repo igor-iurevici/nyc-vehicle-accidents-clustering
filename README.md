@@ -39,7 +39,7 @@ Project JAR executable and dataset loading:
 ```bash
 sbt package clean
 ```
-To load the JAR executable and the dataset to the bucket:
+Change the `$TARGET` in `cli_commands/load_jar.sh` to your target path and load the JAR executable and the dataset to the bucket:
 ```bash
 cli_commands/load_jar.sh
 cli_commands/load_data.sh <source_file>
