@@ -8,8 +8,9 @@ import dbscan_distributed.config.SparkConfig._
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SparkSession
 import scala.collection.mutable
+import scala.language.postfixOps
 
-object DBSCAN extends Serializable {
+object DBSCAN {
   /**
    * Fits a DBSCAN clustering model to the data using Spark.
    *
