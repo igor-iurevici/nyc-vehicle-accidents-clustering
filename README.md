@@ -21,7 +21,7 @@ In the traditional DBSCAN algorithm, one of the most computationally expensive o
 The distributed version of this project aims to parallelize this computation over multiple workers and gain scalability through Scala and Spark.
 The architecture of the implementation is shown in the figure below, and furtherly explained in the [presentation](...).
 <p align="center">
-  <img src="https://drive.google.com/uc?export=view&id=1qr1OcT6zRBS_s9GxyvVxL1EloRPOPo61" alt="Image" width="400px" style="max-width: 100%; margin-top: 20px;" />
+  <img src="https://drive.google.com/uc?export=view&id=1qr1OcT6zRBS_s9GxyvVxL1EloRPOPo61" alt="Image" width="600px" style="max-width: 100%; margin-top: 20px;" />
 </p>
 
 
@@ -74,6 +74,19 @@ A Python script provides results visualization on a map. (assuming Python 3.* an
 python3 plot.py <source_file>
 ```
 Where `<source_file>` is the same used when saving job results.
+
+## Evaluation
+The implementation have been tested with the following Dataproc Cluster settings:
+- `n1-standard` machines (4 vCPUs, 100GB bootsize, Intel Skylake CPU) provided by `us-west1` region;
+- 1 Master and 5 Workers (total of 24 vCPUs);
+- Image version `2.1-debian11`, supporting Spark up top version 2.12 and Scala up to version 3.3.
+
+Various tests have been executed on the cluster, exploiting the GCP free trial credits.
+The distributed version, run on 2, 4, 8 and 16 partitions, showed scalability on dataset size increase (figure below).
+<p align="center">
+  <img src="https://drive.google.com/uc?export=view&id=1rd1gXNDyoGzLzoTq6PhHRUdB4vw60Rs2" alt="Image" width="600px" style="max-width: 100%; margin-top: 20px;" />
+</p>
+The more one cluster neighborhood increase, the better the algorithm scales.
 
 
 
