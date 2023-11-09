@@ -74,6 +74,10 @@ A Python script provides results visualization on a map. (assuming Python 3.* an
 python3 plot.py <source_file>
 ```
 Where `<source_file>` is the same used when saving job results.
+Below the visualization of the DBSCAN algorithm run on NYC vehicle accidents filtered on the 2022 year, with eps=0.4 (Haversine metric) and minPoints=50.
+<p align="center">
+  <img src="https://drive.google.com/uc?export=view&id=1RapxU5YzS3ZD4uIT7zWfZK0c_OylHDHG" alt="Image" style="width: 100%; max-width: 100%; margin-top: 20px;" />
+</p>
 
 ## Evaluation
 The implementation have been tested with the following Dataproc Cluster settings:
