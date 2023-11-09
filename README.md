@@ -79,7 +79,7 @@ Where `<source_file>` is the same used when saving job results.
 The implementation have been tested with the following Dataproc Cluster settings:
 - `n1-standard` machines (4 vCPUs, 100GB bootsize, Intel Skylake CPU) provided by `us-west1` region;
 - 1 Master and 5 Workers (total of 24 vCPUs);
-- Image version `2.1-debian11`, supporting Spark up top version 2.12 and Scala up to version 3.3.
+- Image version `2.1-debian11`, supporting Scala up top version 2.12 and Spark up to version 3.3.
 
 Various tests have been executed on the cluster, exploiting the GCP free trial credits.
 The distributed version, run on 2, 4, 8 and 16 partitions, showed scalability on dataset size increase (figure below).
