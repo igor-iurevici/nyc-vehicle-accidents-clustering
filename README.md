@@ -19,8 +19,8 @@ The DBSCAN algorithm is sensible to two input parameters: radius around each poi
 ### Distributed version
 In the traditional DBSCAN algorithm, one of the most computationally expensive operations is finding the neighbors of each data point.
 The distributed version of this project aims to parallelize this computation over multiple workers and gain scalability through Scala and Spark.
-The architecture of the implementation is shown in the figure below, and furtherly explained in the [presentation](...).
-<a href="https://drive.google.com/uc?export=view&id=1qr1OcT6zRBS_s9GxyvVxL1EloRPOPo61"><img src="https://drive.google.com/uc?export=view&id=1qr1OcT6zRBS_s9GxyvVxL1EloRPOPo61" style="width: 650px; max-width: 100%; height: auto" title="Click to enlarge picture" />
+The architecture of the implementation is shown in the figure below, and furtherly explained in the [presentation](...). \
+<a href="https://drive.google.com/uc?export=view&id=1qr1OcT6zRBS_s9GxyvVxL1EloRPOPo61"><img src="https://drive.google.com/uc?export=view&id=1qr1OcT6zRBS_s9GxyvVxL1EloRPOPo61" style="width: 650px; max-width: 100%; height: auto; align: centered" title="Click to enlarge picture" />
 
 ## Google Cloud Platform (GCP) Deployment
 The distributed algorithm exploits the Google Cloud Platform (GCP) Dataproc (for processing) and Buckets (for storage) services.
