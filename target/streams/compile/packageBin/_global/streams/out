@@ -28,8 +28,14 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /Users/igor/Desktop/nyc-vehicle-accidents-clustering/target/scala-2.12/classes/dbscan_distributed/algorithm/Model.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	dbscan_distributed/algorithm/DBSCAN$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /Users/igor/Desktop/nyc-vehicle-accidents-clustering/target/scala-2.12/classes/dbscan_distributed/algorithm/DBSCAN$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	dbscan_distributed/algorithm/DBSCANSeq.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/igor/Desktop/nyc-vehicle-accidents-clustering/target/scala-2.12/classes/dbscan_distributed/algorithm/DBSCANSeq.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	dbscan_distributed/algorithm/ModelSeq.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/igor/Desktop/nyc-vehicle-accidents-clustering/target/scala-2.12/classes/dbscan_distributed/algorithm/ModelSeq.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	dbscan_distributed/algorithm/DBSCAN.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /Users/igor/Desktop/nyc-vehicle-accidents-clustering/target/scala-2.12/classes/dbscan_distributed/algorithm/DBSCAN.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	dbscan_distributed/algorithm/DBSCANSeq$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /Users/igor/Desktop/nyc-vehicle-accidents-clustering/target/scala-2.12/classes/dbscan_distributed/algorithm/DBSCANSeq$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	dbscan_distributed/model[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /Users/igor/Desktop/nyc-vehicle-accidents-clustering/target/scala-2.12/classes/dbscan_distributed/model[0m
 [0m[[0m[0mdebug[0m] [0m[0m	dbscan_distributed/model/Point.class[0m

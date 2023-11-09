@@ -1,3 +1,4 @@
+
 package dbscan_distributed.algorithm
 
 import dbscan_distributed.config.AlgorithmConfig._
@@ -10,9 +11,9 @@ import org.apache.spark.sql.SparkSession
 import scala.collection.mutable
 import scala.language.postfixOps
 
-object DBSCAN {
+object DBSCANSeq {
   /**
-   * Fits a DBSCAN clustering model to the data using Spark.
+   * Fits a Sequential DBSCAN clustering model.
    *
    * @param spark       The current SparkSession.
    * @param filename    The name of the input file.
@@ -23,17 +24,15 @@ object DBSCAN {
    *
    * @return A DBSCAN model
    */
-  def fit(spark: SparkSession, filename: String, eps: Double, minPoints: Int): Model = {
+  def fit(spark: SparkSession, filename: String, eps: Double, minPoints: Int): ModelSeq = {
     val sc = spark.sparkContext
-    //var points: RDD[Point] = loadData(spark, filename)
-    //val pointsDriver: Array[Point] = points.collect()
     var points: RDD[(Point, Long)] = loadData(spark, filename).zipWithIndex()
-    val pointsDriver: Array[(Point, Long)] = points.collect()
-    //val clusters = mutable.Map(points.collect().map((_, UNKNOWN)) toSeq: _*)
+    val pointsDriver: Array[(Point, Long)] = points.collect().take(10000)
     val clusters = mutable.Map(pointsDriver.map { case (_, index) => (index, UNKNOWN) } toSeq: _*)
     var clusterId = 0
 
     for (p <- pointsDriver) {
+      println(".")
       if (clusters(p._2) != UNKNOWN) {}
       else {
         var queue = p._1.findNeighbors(pointsDriver, eps).toSet
@@ -45,29 +44,23 @@ object DBSCAN {
           queue = queue.filter(p1 => clusters(p1._2) <= NOISE)
 
           queue.foreach { case (_, index) => clusters(index) = clusterId }
-          //queue.foreach(clusters(_._2) = clusterId)
 
-          // to EXECUTOR
           while (!queue.isEmpty) {
-            points = sc.parallelize(queue.toSeq, PARTITIONS)
-            val clustersBC = sc.broadcast(clusters)
+            //points = sc.parallelize(queue.toSeq, PARTITIONS)
+            //val clustersBC = sc.broadcast(clusters)
 
             // expand cluster with neighbors
             def expand(current: Set[(Point, Long)], p1: (Point, Long)): Set[(Point, Long)] = {
               var neighbors = p1._1.findNeighbors(pointsDriver, eps)
               if (neighbors.size < minPoints) current
               else {
-                neighbors = neighbors.filter(p => clustersBC.value(p._2) <= NOISE)
+                neighbors = neighbors.filter(p => clusters(p._2) <= NOISE)
                 current ++ neighbors.toSet
               }
             }
 
-            // back to DRIVER
-            queue = points.aggregate(Set.empty[(Point, Long)])(expand, (accu1, accu2) => accu1 ++ accu2)
+            queue = queue.foldLeft(Set.empty[(Point, Long)]) { (accu, p) => expand(accu, p) }
             print(queue.size + " ")
-            clustersBC.destroy()
-            //queue.foreach(clusters(_) = clusterId)
-            queue.foreach { case (_, index) => clusters(index) = clusterId}
           }
         }
       }
@@ -79,12 +72,12 @@ object DBSCAN {
 
     println("Result size: " + result.size)
 
-    new Model(clusterId, result)
+    new ModelSeq(clusterId, result)
   }
 }
 
 
-class Model(val clustersNum: Int, val clusters: Seq[(Point, Int)]) {
+class ModelSeq(val clustersNum: Int, val clusters: Seq[(Point, Int)]) {
 
   // Total number of clusters
   def getClustersNum(): Int = clustersNum
