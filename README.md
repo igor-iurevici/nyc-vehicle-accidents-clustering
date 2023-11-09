@@ -84,9 +84,9 @@ The implementation have been tested with the following Dataproc Cluster settings
 Various tests have been executed on the cluster, exploiting the GCP free trial credits.
 The distributed version, run on 2, 4, 8 and 16 partitions, showed scalability on dataset size increase (figure below).
 <p align="center">
-  <img src="https://drive.google.com/uc?export=view&id=1rd1gXNDyoGzLzoTq6PhHRUdB4vw60Rs2" alt="Image" width="600px" style="max-width: 100%; margin-top: 20px;" />
+  <img src="https://drive.google.com/uc?export=view&id=1rd1gXNDyoGzLzoTq6PhHRUdB4vw60Rs2" alt="Image" style="max-width: 100%; margin-top: 20px;" />
 </p>
-The more one cluster neighborhood increase, the better the algorithm scales.
+The more one cluster neighborhood increases, the better the algorithm scales.
 
 
 
