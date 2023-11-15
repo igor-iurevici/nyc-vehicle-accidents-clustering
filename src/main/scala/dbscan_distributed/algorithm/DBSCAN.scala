@@ -77,7 +77,6 @@ object DBSCAN {
       case (point, index) => (point, clusters(index))
     }
 
-    println("Result size: " + result.size)
 
     new Model(clusterId, result)
   }

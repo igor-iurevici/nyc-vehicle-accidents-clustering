@@ -1,6 +1,6 @@
 package dbscan_distributed
 
-import dbscan_distributed.algorithm.{DBSCAN, DBSCANSeq}
+import dbscan_distributed.algorithm.DBSCAN
 import dbscan_distributed.utils.FileManager._
 import dbscan_distributed.config.SparkConfig._
 
@@ -37,7 +37,6 @@ object Main {
      */
     val t0 = System.nanoTime
     val model = DBSCAN.fit(spark, fromFile, eps, minPoints)
-    //val model = DBSCANSeq.fit(spark, fromFile, eps, minPoints)
     val t1 = System.nanoTime
     println("*****************************************************")
     println("* Elapsed time : " + (t1 - t0) / math.pow(10, 9) + " seconds")
