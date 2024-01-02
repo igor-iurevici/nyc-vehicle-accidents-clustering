@@ -16,9 +16,6 @@
 [0m[[0m[0mdebug[0m] [0m[0m	DBSCAN.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	Main.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	Model.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	DBSCANSeq.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	DBSCANSeq$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	ModelSeq.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	FileManager.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	FileManager$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	SparkConfig$.class[0m

@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/Python-3.11.5-blue" alt="alternatetext">
 </p>
 
-Implementation of a distributed version of the DBSCAN clustering algorithm for the University of Bologna course of "Scalable and Cloud Programming".
+Implementation of a distributed version of the DBSCAN clustering algorithm for a university project.
 The algorithm is applied and tested on the New York City vehicle accidents [dataset](https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95) provided by [NYC OpenData](https://data.cityofnewyork.us).
 
 ## Implementation
